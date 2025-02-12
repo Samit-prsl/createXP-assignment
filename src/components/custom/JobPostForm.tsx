@@ -78,6 +78,7 @@ export function JobPostForm() {
       });
       form.reset();
       router.refresh();
+      router.push('/company/jobs')
     } catch (error) {
       toast({
         title: "Error",
@@ -91,43 +92,36 @@ export function JobPostForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job Title</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g. Senior React Developer" {...field} />
-              </FormControl>
-              <FormDescription>
-                The title of the job position youre posting.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Describe the job responsibilities and requirements..."
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Provide a detailed description of the job.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <FormField
+        control={form.control}
+        name="title"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Job Title</FormLabel>
+            <FormControl>
+              <Input placeholder="e.g. Senior React Developer" {...field} className="w-full" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="description"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Job Description</FormLabel>
+            <FormControl>
+              <Textarea placeholder="Describe the job responsibilities and requirements..." className="resize-none w-full" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormField
           control={form.control}
           name="category"
@@ -137,7 +131,7 @@ export function JobPostForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a job category" />
+                    <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -148,13 +142,11 @@ export function JobPostForm() {
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Choose the most appropriate category for this job.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="location"
@@ -162,37 +154,32 @@ export function JobPostForm() {
             <FormItem>
               <FormLabel>Location</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. New York, NY or Remote" {...field} />
+                <Input placeholder="e.g. New York, NY or Remote" {...field} className="w-full" />
               </FormControl>
-              <FormDescription>
-                Specify the job location or if its remote.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="flex space-x-4">
-          <FormField
-            control={form.control}
-            name="salary"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Salary Range</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g. 50000 - 80000" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Enter the salary range in the format: min - max
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Create Job Post"}
-        </Button>
-      </form>
-    </Form>
+      </div>
+
+      <FormField
+        control={form.control}
+        name="salary"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Salary Range</FormLabel>
+            <FormControl>
+              <Input placeholder="e.g. 50000 - 80000" {...field} className="w-full" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+        {isSubmitting ? "Submitting..." : "Create Job Post"}
+      </Button>
+    </form>
+  </Form>
   );
 }

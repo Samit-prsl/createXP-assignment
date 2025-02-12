@@ -54,14 +54,14 @@ export default function JobListingsPage() {
   });
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container py-10 px-3 lg:mx-auto overflow-x-hidden">
       <h1 className="text-3xl font-bold mb-6 text-center">Job Listings</h1>
       <div className="flex justify-between mb-4">
         <Input
           placeholder="Search jobs..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="max-w-sm"
+          className="lg:max-w-sm w-1/2"
         />
       </div>
       <div className="rounded-md border">

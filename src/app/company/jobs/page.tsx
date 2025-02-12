@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getAllJobs as getJobPosts, deleteJob as deleteJobPost, updateJob } from "@/app/actions/jobs"
+import { getAllJobs as getJobPosts, deleteJob as deleteJobPost } from "@/app/actions/jobs"
 import { JobPost } from "@/app/types/types"
 import { JobPostsTable } from "@/components/custom/JobPostsTable"
 import { toast } from "@/hooks/use-toast"
@@ -35,7 +35,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-5">
       <h1 className="text-3xl font-bold mb-6">Job Posts Dashboard</h1>
       <JobPostsTable jobPosts={jobPosts} handleDelete={handleDelete} handleEdit={handleEdit} />
     </div>

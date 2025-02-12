@@ -92,8 +92,8 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter jobs..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter jobs based on category..."
+          value={(table.getColumn("category")?.getFilterValue() as string) ?? ""}
           onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
