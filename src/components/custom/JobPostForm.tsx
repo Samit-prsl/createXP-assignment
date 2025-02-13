@@ -100,7 +100,7 @@ export function JobPostForm() {
           <FormItem>
             <FormLabel>Job Title</FormLabel>
             <FormControl>
-              <Input placeholder="e.g. Senior React Developer" {...field} className="w-full" />
+              <Input placeholder="e.g. Senior React Developer" {...field} className="lg:w-full w-3/4" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -114,14 +114,14 @@ export function JobPostForm() {
           <FormItem>
             <FormLabel>Job Description</FormLabel>
             <FormControl>
-              <Textarea placeholder="Describe the job responsibilities and requirements..." className="resize-none w-full" {...field} />
+              <Textarea placeholder="Describe the job responsibilities and requirements..." className="resize-none lg:w-full w-3/4" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:w-full w-3/4">
         <FormField
           control={form.control}
           name="category"
@@ -154,7 +154,7 @@ export function JobPostForm() {
             <FormItem>
               <FormLabel>Location</FormLabel>
               <FormControl>
-                <Input placeholder="e.g. New York, NY or Remote" {...field} className="w-full" />
+                <Input placeholder="e.g. New York, NY or Remote" {...field} className="lg:w-full w-3/4" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -169,16 +169,18 @@ export function JobPostForm() {
           <FormItem>
             <FormLabel>Salary Range</FormLabel>
             <FormControl>
-              <Input placeholder="e.g. 50000 - 80000" {...field} className="w-full" />
+              <Input placeholder="e.g. 50000 - 80000" {...field} className="lg:w-full w-3/4" />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
 
-      <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+    <div className=" flex lg:justify-center justify-start items-center">
+    <Button type="submit" disabled={isSubmitting} className=" sm:w-auto">
         {isSubmitting ? "Submitting..." : "Create Job Post"}
       </Button>
+    </div>
     </form>
   </Form>
   );

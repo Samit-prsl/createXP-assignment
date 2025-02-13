@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -23,6 +23,8 @@ import { JobPost } from "@/app/types/types";
 export default function JobListingsPage() {
   const [jobs, setJobs] = useState<JobPost[]>([]);
   const [search, setSearch] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [salaryFilter, setSalaryFilter] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const router = useRouter();
 
@@ -36,8 +38,10 @@ export default function JobListingsPage() {
 
   const filteredJobs = jobs.filter(
     (job) =>
-      job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.location.toLowerCase().includes(search.toLowerCase())
+      (job.title.toLowerCase().includes(search.toLowerCase()) ||
+        job.location.toLowerCase().includes(search.toLowerCase())) &&
+      job.location.toLowerCase().includes(locationFilter.toLowerCase()) &&
+      job.salary.toLowerCase().includes(salaryFilter.toLowerCase())
   );
 
   const table = useReactTable({
@@ -56,12 +60,24 @@ export default function JobListingsPage() {
   return (
     <div className="container py-10 px-3 lg:mx-auto overflow-x-hidden">
       <h1 className="text-3xl font-bold mb-6 text-center">Job Listings</h1>
-      <div className="flex justify-between mb-4">
+      <div className="flex flex-col md:flex-row md:items-center md:space-x-4 mb-4 gap-2">
         <Input
           placeholder="Search jobs..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="lg:max-w-sm w-1/2"
+          className="lg:max-w-sm w-full md:w-1/3"
+        />
+        <Input
+          placeholder="Filter by location..."
+          value={locationFilter}
+          onChange={(e) => setLocationFilter(e.target.value)}
+          className="lg:max-w-sm w-full md:w-1/3"
+        />
+        <Input
+          placeholder="Filter by salary range..."
+          value={salaryFilter}
+          onChange={(e) => setSalaryFilter(e.target.value)}
+          className="lg:max-w-sm w-full md:w-1/3"
         />
       </div>
       <div className="rounded-md border">
@@ -100,7 +116,7 @@ export default function JobListingsPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={3} className="text-center py-4">
-                  No jobs found.
+                  Please wait for sometime data can show up if waiting for long then no data found!
                 </TableCell>
               </TableRow>
             )}

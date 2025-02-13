@@ -87,7 +87,6 @@ export default function JobDetailsPage() {
         </CardContent>
       </Card>
 
-      {/* Action Buttons */}
       <div className="mt-6 flex flex-col md:flex-row gap-4 justify-center">
         <Button
           variant="outline"

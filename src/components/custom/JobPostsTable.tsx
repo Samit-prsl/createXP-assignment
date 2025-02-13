@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   type ColumnDef,
   flexRender,
@@ -12,24 +19,30 @@ import {
   type ColumnFiltersState,
   getFilteredRowModel,
   getPaginationRowModel,
-} from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { JobPost, JobPostsTableProps } from "@/app/types/types"
-import { JobEditSheet } from "./JobEditSheet"
-import { DeleteJobDialog } from "./JobDeleteDialog"
-import { useRouter } from "next/navigation"
+} from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { JobPost, JobPostsTableProps } from "@/app/types/types";
+import { JobEditSheet } from "./JobEditSheet";
+import { DeleteJobDialog } from "./JobDeleteDialog";
+import { useRouter } from "next/navigation";
 
-export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTableProps) {
+export function JobPostsTable({
+  jobPosts,
+  handleEdit,
+  handleDelete,
+}: JobPostsTableProps) {
   const router = useRouter();
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const columns: ColumnDef<JobPost>[] = [
     {
       accessorKey: "title",
       header: "Job Title",
-      cell: ({ row }) => <span className="font-medium">{row.getValue("title")}</span>,
+      cell: ({ row }) => (
+        <span className="font-medium">{row.getValue("title")}</span>
+      ),
     },
     {
       accessorKey: "category",
@@ -44,7 +57,9 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
     {
       accessorKey: "salary",
       header: "Salary Range",
-      cell: ({ row }) => <span className="font-medium">{row.getValue("salary")}</span>,
+      cell: ({ row }) => (
+        <span className="font-medium">{row.getValue("salary")}</span>
+      ),
     },
     {
       accessorKey: "actions",
@@ -54,7 +69,10 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
         return (
           <div className="flex justify-center space-x-2">
             <JobEditSheet job={job} onUpdate={handleEdit} />
-            <DeleteJobDialog jobId={job.id} onDelete={() => handleDelete(job.id)} />
+            <DeleteJobDialog
+              jobId={job.id}
+              onDelete={() => handleDelete(job.id)}
+            />
           </div>
         );
       },
@@ -65,7 +83,11 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
       cell: ({ row }) => {
         const job = row.original;
         return (
-          <Button variant="outline" size="sm" onClick={() => router.push(`/company/jobs/${job.id}/applications`)}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.push(`/company/jobs/${job.id}/applications`)}
+          >
             View Applications
           </Button>
         );
@@ -90,11 +112,33 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center space-x-4 py-4">
         <Input
-          placeholder="Filter jobs based on category..."
-          value={(table.getColumn("category")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
+          placeholder="Filter by category..."
+          value={
+            (table.getColumn("category")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn("category")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <Input
+          placeholder="Filter by location..."
+          value={
+            (table.getColumn("location")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn("location")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <Input
+          placeholder="Filter by salary range..."
+          value={(table.getColumn("salary")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("salary")?.setFilterValue(event.target.value)
+          }
           className="max-w-sm"
         />
       </div>
@@ -106,7 +150,12 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id} className="px-4 py-3 text-center">
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -115,18 +164,28 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="hover:bg-gray-50">
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className="hover:bg-gray-50"
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="p-2 text-center">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Please wait for sometime data can show up if waiting too long data aint present!
                 </TableCell>
               </TableRow>
             )}
@@ -134,10 +193,20 @@ export function JobPostsTable({ jobPosts, handleEdit, handleDelete }: JobPostsTa
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
           Previous
         </Button>
-        <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
           Next
         </Button>
       </div>
